@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    #title {
+      background-color: rgb(114, 114, 145);
+      width: 100%;
+      height: 15vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: black;
+    }
+
+    #title h1 {
+      margin: 0;
+    }
+
+    #dataTable {
+      display: none;
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+      text-align: center;
+    }
+
+    #dataTable th, #dataTable td {
+      border: 1px solid #333;
+      padding: 8px;
+      text-align: left;
+    }
+    
+  </style>
+</head>
+<body>
+  <div id="title">
+    <h1 id="toggleButton">Click to Show Table/Double Click to Hide Table</h1>
+  </div>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Mobile</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <script>
+    function generateJSONArray() {
+      const dataArray = [
+        {
+          "First Name": "Terry",
+          "Mobile": "+63 791 675 8914",
+          "Email": "atuny0@shou.com"
+        },
+        {
+          "First Name": "Sheldon",
+          "Mobile": "+7 813 117 7139",
+          "Email": "hbingly@plala.or.jp"
+        },
+        {
+          "First Name": "Terrill",
+          "Mobile": "+63 739 292 7942",
+          "Email": "rshawae2@51.la"
+        }, 
+        {
+          "First Name": "Miles",
+          "Mobile": "+86 461 145 4186",
+          "Email": "yragatt3@nature.com"
+        }, 
+        {
+          "First Name": "Mavis",
+          "Mobile": "+372 285 771 1911",
+          "Email": "kmeus4@upenn.edu"
+        }, 
+        {
+          "First Name": "Alison",
+          "Mobile": "+351 527 735 3642",
+          "Email": "jterleven5@nhs.uk"
+        }, 
+        {
+          "First Name": "Oleta",
+          "Mobile": "+62 640 802 7111",
+          "Email": "dpettegre6@columbia.edu"
+        }, 
+        {
+          "First Name": "Ewell",
+          "Mobile": "+86 946 297 2275",
+          "Email": "ggude7@chron.com"
+        }, 
+        {
+          "First Name": "Demetrius",
+          "Mobile": "+86 356 590 9727",
+          "Email": "nloiterton8@aol.com"
+        }, 
+        {
+          "First Name": "Eleanora",
+          "Mobile": "+60 184 408 0824",
+          "Email": "umegourty9@jalbum.net"
+        }, 
+        {
+          "First Name": "Marcel",
+          "Mobile": "+967 253 210 0344",
+          "Email": "acharlota@liveinternet.ru"
+        },
+        {
+          "First Name": "Assunta",
+          "Mobile": "+380 962 542 6549",
+          "Email": "rhallawellb@dropbox.com"
+        }, 
+        {
+          "First Name": "Trace",
+          "Mobile": "+1 609 937 3468",
+          "Email": "lgribbinc@posterous.com"
+        },
+        {
+          "First Name": "Alice",
+          "Mobile": "+63 791 675 8914",
+          "Email": "alice@example.com"
+        },
+        {
+          "First Name": "Bob",
+          "Mobile": "+7 813 117 7139",
+          "Email": "bob@example.com"
+        },
+        {
+          "First Name": "Charlie",
+          "Mobile": "+63 739 292 7942",
+          "Email": "charlie@example.com"
+        },
+        {
+          "First Name": "David",
+          "Mobile": "+86 461 145 4186",
+          "Email": "david@example.com"
+        },
+        {
+          "First Name": "Eva",
+          "Mobile": "+372 285 771 1911",
+          "Email": "eva@example.com"
+        },
+        {
+          "First Name": "Frank",
+          "Mobile": "+351 527 735 3642",
+          "Email": "frank@example.com"
+        },
+        {
+          "First Name": "Grace",
+          "Mobile": "+62 640 802 7111",
+          "Email": "grace@example.com"
+        },
+        {
+          "First Name": "Henry",
+          "Mobile": "+86 946 297 2275",
+          "Email": "henry@example.com"
+        },
+        {
+          "First Name": "Ivy",
+          "Mobile": "+86 356 590 9727",
+          "Email": "ivy@example.com"
+        },
+        {
+          "First Name": "Jack",
+          "Mobile": "+60 184 408 0824",
+          "Email": "jack@example.com"
+        },
+        {
+          "First Name": "Karen",
+          "Mobile": "+967 253 210 0344",
+          "Email": "karen@example.com"
+        },
+        {
+          "First Name": "Leo",
+          "Mobile": "+380 962 542 6549",
+          "Email": "leo@example.com"
+        },
+        {
+          "First Name": "Nina",
+          "Mobile": "+1 609 937 3468",
+          "Email": "nina@example.com"
+        }
+
+      ];
+
+      return dataArray;
+    }
+
+    function toggleTable() {
+      const table = document.getElementById('dataTable');
+      table.style.display = table.style.display === 'none' ? 'table' : 'none';
+    }
+
+    function handleTitleClick() {
+      toggleTable();
+
+      if (document.getElementById('dataTable').style.display === 'table') {
+        const tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = '';
+
+        const jsonData = generateJSONArray();
+        jsonData.forEach(item => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+          <td>${item["First Name"]}</td>
+          <td>${item["Mobile"]}</td>
+          <td>${item["Email"]}</td>`;
+          tableBody.appendChild(row);
+        });
+      }
+    }
+
+    const titleDiv = document.getElementById('title');
+    titleDiv.addEventListener('click', handleTitleClick);
+    titleDiv.addEventListener('dblclick', toggleTable);
+
+    titleDiv.addEventListener('mousedown', function (event) {
+      if (event.detail > 1) {
+        event.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>

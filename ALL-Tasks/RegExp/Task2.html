@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top:20px ;
+        }
+
+        button:hover {
+            background-color: #ccc;
+        }
+        h2{
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        #registrationForm{
+            max-width: 400px;
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <label for="firstName">First Name:</label><br>
+            <input type="text" id="firstName" required pattern="[A-Za-z]+"><br>
+
+            <label for="lastName">Last Name:</label><br>
+            <input type="text" id="lastName" required pattern="[A-Za-z]+"><br>
+
+            <label for="birthdate">Birth Date:</label>
+            <input type="date" id="birthdate" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <label for="confirmEmail">Confirm Email:</label>
+            <input type="email" id="confirmEmail" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required pattern="^(?=.*[A-Z])(?=.*\d{2,})(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,32}">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" required>
+
+            <label for="mobile">Mobile Number:</label>
+            <input type="tel" id="mobile" required pattern="[0-9]{10}">
+
+            <button type="button" onclick="registerUser()">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function registerUser() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const birthdate = document.getElementById('birthdate').value;
+            const email = document.getElementById('email').value;
+            const confirmEmail = document.getElementById('confirmEmail').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const mobile = document.getElementById('mobile').value;
+
+            // Validate name
+            if (!/^[A-Za-z]+$/.test(firstName) || !/^[A-Za-z]+$/.test(lastName)) {
+                // alert('Name should contain only letters.');
+                document.getElementById('error-message').innerHTML = 'Name should contain only letters.';
+
+                return;
+            }
+
+            // Validate birth date
+            // You may want to add more specific validation based on your requirements
+
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                // alert('Invalid email format.');
+                document.getElementById('error-message').innerHTML = 'Invalid email format.';
+
+                return;
+            }
+
+            // Check if emails match
+            if (email !== confirmEmail) {
+                // alert('Emails do not match.');
+                document.getElementById('error-message').innerHTML = 'Emails do not match.';
+
+                return;
+            }
+
+            // Validate password
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d{2,})(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,32}$/;
+            if (!passwordRegex.test(password)) {
+                // alert('Invalid password format.');
+
+                document.getElementById('error-message').innerHTML = 'Invalid password format.';
+
+                return;
+            }
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                // alert('Passwords do not match.');
+                document.getElementById('error-message').innerHTML = 'Passwords do not match.';
+
+                return;
+            }
+
+            // Validate mobile number
+            const mobileRegex = /^[0-9]{10}$/;
+            if (!mobileRegex.test(mobile)) {
+                // alert('Invalid mobile number.');
+                document.getElementById('error-message').innerHTML = 'Invalid mobile number.';
+
+                return;
+            }
+
+            // Store the user information in local storage or perform further actions as needed
+            const user = {
+                firstName: firstName,
+                lastName: lastName,
+                birthdate: birthdate,
+                email: email,
+                password: password,
+                mobile: mobile
+            };
+
+            const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+            existingUsers.push(user);
+            localStorage.setItem('users', JSON.stringify(existingUsers));
+
+            document.getElementById('message').innerHTML = 'Registration successful!';
+            document.getElementById('error-message').innerHTML = '';
+
+            // alert('Registration successful!');
+            // Clear the registration form
+            document.getElementById('registrationForm').reset();
+        }
+    </script>
+</body>
+
+</html>
